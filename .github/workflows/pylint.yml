@@ -1,4 +1,4 @@
-name: Run pylint
+name: Pylint Check
 
 on: [push]
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -15,8 +15,12 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install pylint pylint-django
+      - name: Set PYTHONPATH
+        run: echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
       - name: Run pylint
         run: |
           pylint --load-plugins pylint_django \
           --rcfile=.pylintrc \
-          --django-settings-module=myproject.settings \ main/ myproject/
+          --django-settings-module=myproject.settings \
+          --ignore-paths="**/migrations/**" \
+          main myproject
