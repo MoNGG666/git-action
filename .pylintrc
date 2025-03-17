@@ -1,22 +1,26 @@
 [MASTER]
-ignore=migrations, venv
+ignore=migrations, venv, __pycache__
 load-plugins=pylint_django
+persistent=no
 
 [MESSAGES CONTROL]
 disable=
     missing-docstring,
     too-few-public-methods,
-    protected-access,
+    invalid-name,
     duplicate-code,
-    import-error
+    import-error,
+    trailing-newlines,
+    missing-final-newline
 
 [FORMAT]
 max-line-length=120
 
 [TYPECHECK]
-ignored-modules=django
+ignored-modules=django, myproject.settings
 
 [DESIGN]
+max-parents=8
 max-attributes=15
 
 [LOGGING]
